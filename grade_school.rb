@@ -8,22 +8,23 @@ class School
   end
 
   def add(name, grade)
-    unless @students[grade]
-      @students[grade] = []
-    end
-
+    @students[grade] = [] unless @students[grade]
     @students[grade] << name
   end
 
   def students_by_grade
-    initial_list = []
-
-    @students.sort.each_with_object({}) do |row, result|
-      result[:grade] = row[0]
-      result[:students] = row[1].sort
-      initial_list << result
+    @students.sort.map do |row|
+      { grade: row[0], students: row[1].sort}
     end
-
-    initial_list
   end
+end
+
+input = gets
+input = input.split
+puts input
+
+school = School.new
+case input
+when input.first == 'Add'
+  school.send(input.first.downcase, name, grade)
 end
